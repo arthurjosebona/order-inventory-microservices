@@ -1,7 +1,9 @@
 package com.senai.tecdes.app_pedidos.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.senai.tecdes.app_pedidos.client.EstoqueClient;
 import com.senai.tecdes.app_pedidos.dto.PedidoRequestDTO;
@@ -24,6 +26,10 @@ public class PedidoService {
 
     @Transactional
     public ResponseEntity<PedidoResponseDTO> create(PedidoRequestDTO request) {
+        if (request.quantidadePedida() == null || request.quantidadePedida() <= 0) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "A quantidade pedida deve ser maior que zero");
+        }
         ProdutoDTO produto = buscarProdutoDoCliente(request.pedidoId());
         if (produto == null) {
             // Retorna 404 se retornou do cliente tmb
