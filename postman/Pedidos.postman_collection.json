@@ -1,0 +1,123 @@
+{
+  "info": {
+    "name": "Pedidos - order-inventory-microservices",
+    "description": "Testes do endpoint POST /pedidos. Produto 1 tem estoque 10, Produto 2 tem estoque 0. Status APROVADO quando quantidadeEstoque >= quantidadePedida, senao REJEITADO.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8082"
+    }
+  ],
+  "item": [
+    {
+      "name": "ID 1 - estoque menor que 10 (sucesso / APROVADO)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"quantidadePedida\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "ID 1 - quantidade maior que 10 (erro / REJEITADO)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"quantidadePedida\": 15\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "ID 2 - qualquer quantidade (estoque 0 / REJEITADO)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 2,\n  \"quantidadePedida\": 3\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "ID 1 - quantidade igual a 0 (validacao futura)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"quantidadePedida\": 0\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "ID 1 - quantidade negativa (validacao futura)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 1,\n  \"quantidadePedida\": -5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    },
+    {
+      "name": "ID 2 - quantidade negativa (validacao futura)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pedidoId\": 2,\n  \"quantidadePedida\": -1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pedidos",
+          "host": ["{{baseUrl}}"],
+          "path": ["pedidos"]
+        }
+      }
+    }
+  ]
+}
